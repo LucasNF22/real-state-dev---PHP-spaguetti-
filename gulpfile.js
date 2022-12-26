@@ -17,6 +17,7 @@ const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
     imagenes: 'src/img/**/*'
+    
 }
 
 function css() {
@@ -59,6 +60,7 @@ function watchArchivos() {
     watch(paths.js, javascript);
     watch(paths.imagenes, imagenes);
     watch(paths.imagenes, versionWebp);
+    
 }
 
 exports.css = css;
