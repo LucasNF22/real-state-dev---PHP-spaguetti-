@@ -26,11 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     echo "<pre>";
     var_dump($_POST);
     echo "</pre>";
-
+    
     echo "<pre>";
     var_dump($_FILES);
     echo "</pre>";
     */
+    
 
     // mysqli_real_escape_string, evita que se inyecte codigo sql, y guarda los datos como entidades que no se pueden ejecutar.
     $titulo = mysqli_real_escape_string($db,  $_POST['titulo'] );
@@ -81,9 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $errores[] = "Debes añadir una imagen";
     }
     //validando tamaño de imagen
-    $tamaño_max = 1000 * 100;
+    $tamaño_max = 1000 ;  // en kb
+    $tamaño_max_bytes = 1000 * 1000; // en bytes
 
-    if($imagen['size'] > $tamaño_max) {
+    if($imagen['size'] > $tamaño_max_bytes) {
         $errores[] = "La imagen es muy pesada";
     }
 
@@ -95,9 +97,24 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     // revisar que no haya errores
     if (empty($errores)) {
 
+        /** Subida de archivos **/
+        // Crear carpeta
+        $carpetaImagenes = '../../imagenes/';
+        if(!is_dir($carpetaImagenes)){
+            mkdir($carpetaImagenes);
+        }
+
+        // Generar nombre unico
+        $nombreImagen= md5( uniqid( rand(), true)) . '.jpg';
+
+
+        // Subir la imagen
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+
+        
         //Insertar a base de datos
-        $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedor_id)
-                    VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId') ";
+        $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedor_id)
+                    VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId') ";
 
         // echo $query;
 
@@ -106,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if ($resultado) {
             // Se redirecciona
 
-            header('Location: /admin');
+            header('Location: /admin?resultado=1');
         }
     }
 }
@@ -141,7 +158,7 @@ incluirTemplate('header');
             <input type="number" id="precio" name="precio" placeholder="Precio Propiedad" value="<?php echo $precio ?>">
 
             <label for="imagen">Imagen:</label>
-            <input type="file" id="imagen" name="imagen" accept="image/jpg, image/png">
+            <input type="file" id="imagen" name="imagen" accept=" image/png, image/jpg">
 
             <label for="descripcion">Descripcion:</label>
             <textarea id="descripcion" name="descripcion"><?php echo $descripcion ?></textarea>
