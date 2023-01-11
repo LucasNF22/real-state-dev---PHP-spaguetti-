@@ -1,5 +1,12 @@
 <?php
 
+require '../../includes/funciones.php';
+
+$auth = estaAutenticado();
+if(!$auth){
+    header('location: /');
+}
+
 // Validar el id valido en la URL
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -144,15 +151,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         
         //Update en base de datos
         $query = " UPDATE propiedades SET 
-            titulo = '${titulo}', 
-            precio = '${precio}', 
-            imagen = '${nombreImagen}', 
-            descripcion = '${descripcion}',
-            habitaciones = ${habitaciones},
-            wc = ${wc},
-            estacionamiento = ${estacionamiento},
-            vendedor_id = ${vendedorId} 
-            WHERE id = ${id} ";
+            titulo = '$titulo', 
+            precio = '$precio', 
+            imagen = '$nombreImagen', 
+            descripcion = '$descripcion',
+            habitaciones = $habitaciones,
+            wc = $wc,
+            estacionamiento = $estacionamiento,
+            vendedor_id = $vendedorId 
+            WHERE id = $id ";
 
         // echo $query;
 
@@ -167,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 }
 
 
-require '../../includes/funciones.php';
+
 incluirTemplate('header');
 
 ?>

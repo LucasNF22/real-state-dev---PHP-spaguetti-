@@ -11,7 +11,6 @@ function conectarDB(): mysqli
         echo "Error no se pudo conectar";
         exit;
     }
-
-
+    
     return $db;
 }

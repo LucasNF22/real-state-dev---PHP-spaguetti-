@@ -30,94 +30,11 @@
     <section class="seccion contenedor">
         <h2>Propiedades disponibles</h2>
 
-        <div class="contenedor-anuncios">
-            <div class="anuncio">
-                <picture>
-                    <source srcset="build/img/anuncio1.webp" type="image/webp">
-                    <source srcset="build/img/anuncio1.webp" type="image/jpeg">
-                    <img loading="lazy" src="build/img/anuncio1.jpg" alt="anuncio">
-                </picture>
-                <div class="contenido-anuncio">
-                    <h3>Casa en el Lago</h3>
-                    <p>Casa en el lago con excelente vista, materiales de lujo a un excelente precio.</p>
-
-                    <p class="precio">$3.000.000</p>
-                    <ul class="iconos-caracteristicas">
-                        <li>
-                            <img loading="lazy" src="build/img/icono_wc.svg" alt="icono wc">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono habitaciones">
-                            <p>4</p>
-                        </li>
-                    </ul>
-
-                    <a href="anuncio.php" class="boton boton-amarillo">Ver propiedad</a>
-                </div>
-            </div> <!--fin .anuncio-->
-            <div class="anuncio">
-                <picture>
-                    <source srcset="build/img/anuncio2.webp" type="image/webp">
-                    <source srcset="build/img/anuncio2.webp" type="image/jpeg">
-                    <img loading="lazy" src="build/img/anuncio2.jpg" alt="anuncio">
-                </picture>
-                <div class="contenido-anuncio">
-
-                    <h3>Casa en el valle</h3>
-                    <p>Casa en el con diseño moderno y tecnología de punta.</p>
-                    <p class="precio">$3.000.000</p>
-                    <ul class="iconos-caracteristicas">
-                        <li>
-                            <img loading="lazy" src="build/img/icono_wc.svg" alt="icono wc">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono habitaciones">
-                            <p>4</p>
-                        </li>
-                    </ul>
-
-                    <a href="anuncio.php" class="boton boton-amarillo">Ver propiedad</a>
-                </div>
-            </div> <!--fin .anuncio-->
-            <div class="anuncio">
-                <picture>
-                    <source srcset="build/img/anuncio3.webp" type="image/webp">
-                    <source srcset="build/img/anuncio3.webp" type="image/jpeg">
-                    <img loading="lazy" src="build/img/anuncio3.jpg" alt="anuncio">
-                </picture>
-                <div class="contenido-anuncio">
-                    <h3>Casa estilo cabaña</h3>
-                    <p>Casa en la ciudad, con pileta y un estilo acojedor. </p>
-                    <p> - EXCELENTE OPORTUNIDAD - </p>
-                    <p class="precio">$3.000.000</p>
-                    <ul class="iconos-caracteristicas">
-                        <li>
-                            <img loading="lazy" src="build/img/icono_wc.svg" alt="icono wc">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono habitaciones">
-                            <p>4</p>
-                        </li>
-                    </ul>
-                    <a href="anuncio.php" class="boton-amarillo-block">Ver propiedad</a>
-                </div>
-            </div> <!--fin .anuncio-->
-        </div><!--fin .contenedor-anuncios-->
+        <?php 
+            $limite = 3;
+            include 'includes/templates/tarjeta-propiedad.php';
+        ?>
+        
         <div class="alinear-centro">
             <a href="anuncios.php" class="boton-verde j">Ver todas</a>
         </div>

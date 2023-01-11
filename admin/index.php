@@ -1,5 +1,13 @@
 <?php
 
+require '../includes/funciones.php';
+
+$auth = estaAutenticado();
+if(!$auth){
+    header('location: /');
+}
+
+
 
 // Importar conexion a la BD
 require '../includes/config/database.php';
@@ -11,36 +19,35 @@ $query = "SELECT * FROM propiedades";
 // Consultar la BD
 $resultadoConsulta = mysqli_query($db, $query);
 
+// Mensaje de propiedade creada correctamente
+$resultado = $_GET['resultado'] ?? null; 
 
-$resultado = $_GET['resultado'] ?? null; // Mensaje de propiedade creada correctamente
-
-
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Eliminar Propiedad
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $id = $_POST['id'];
     $id = filter_var($id, FILTER_VALIDATE_INT);
 
-    if($id){
-        // Eliminar el archivo
-        $query_imagen = " SELECT imagen FROM propiedades WHERE id = ${id} ";
+    if($id) {
+        // Elimina el archivo de imagend e la propiedad
+        $query_imagen = " SELECT imagen FROM propiedades WHERE id = $id ";
+        $resultado_QI = mysqli_query($db, $query_imagen);
+        $propiedad = mysqli_fetch_assoc($resultado_QI);
         
-        $resultado = mysqli_query($db, $query);
-        $propeidad = mysqli_fetch_assoc($resultado);
-
         unlink('../imagenes/' . $propiedad['imagen']);
+        
+        
+        // Elmina datos de la propiedad
+        $query_delete = " DELETE FROM propiedades WHERE id = $id ";
+        $resultado_QD = mysqli_query($db, $query_delete);
 
-            exit;
-        // Eliminar propiedad
-        $query_delete = " DELETE FROM propiedades WHERE id = ${id} ";
-        $resultado_delete = mysqli_query($db, $query_delete) ;
-
-        if($resultado_query) {
-            header('location: /admin?resulado=3');
+        if($resultado_QD) {
+            header('location: /admin?resultado=3');
         }
     }
+    
 }
 
 
-require '../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
@@ -51,6 +58,8 @@ incluirTemplate('header');
         <p class="alerta exito"> Anuncio Creado Correctamente</p>
         <?php elseif(intval($resultado) === 2) : ?>
         <p class="alerta exito"> Propiedad Editada Correctamente</p>
+        <?php elseif(intval($resultado) === 3) : ?>
+        <p class="alerta exito"> Propiedad Eliminada Correctamente</p>
     <?php endif ?>
 
     <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
@@ -80,7 +89,7 @@ incluirTemplate('header');
                     <td>$<?php echo $propiedad['precio'] ?></td>
                     <td>
                         <form method="POST">
-                            <input type="hidden" value="<?php echo $propiedad['id'] ?>">
+                            <input type="hidden" name="id" value= "<?php echo $propiedad['id'] ?>">
                             <input type="submit" class="boton-rojo-block" value="Eliminar" >
                         </form>
                         <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id'] ?>" class="boton-amarillo-block ">Editar</a>
